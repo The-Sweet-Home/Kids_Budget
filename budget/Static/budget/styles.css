@@ -1,0 +1,89 @@
+/* General body styling with background */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-image: url('/static/budget/image/main_page_bg.jpg');
+    background-size: contain;
+
+    width: 100%;
+
+    font-family: Arial, sans-serif;
+    background: url("image/main_page_bg.jpg") no-repeat center center fixed;
+    background-size: contain;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    }
+    
+    img.fullscreen-bg {
+        position: fixed;
+        top: 0;
+        left: -7%;
+        width: 100vw;
+        height: 90vh;
+        object-fit: contain;
+        z-index: -1;
+    }
+    
+    img.back {
+        position: fixed;
+        top: 0rem;
+        left: 33%;
+        width: 5vw;
+        height: 9vh;
+        object-fit: contain;
+    }
+    
+    .Shaina_Quin {
+        position: absolute;
+        top: 0;
+        left: 25%;
+        width: 33%;
+    }
+    
+
+/* Centered form container */
+.login-form {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+/* Form elements */
+.login-form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+.login-form select,
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.login-form input[type="submit"] {
+    margin-top: 20px;
+    background-color: #4a148c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-form input[type="submit"]:hover {
+    background-color: #6a1b9a;
+}

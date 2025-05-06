@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ kid_name }}'s Dashboard</title>
+    <link rel="stylesheet" href="{% static 'budget/styles_dash.css' %}">
+</head>
+<body>
+    <section class="ponies">
+        <a href="{% url 'index' %}">
+            <img class="back" src="{% static 'budget/image/Shaina/Back.png' %}">
+        </a>
+        <img class="quin" src="{% static 'budget/image/Shaina/Quin.png' %}">
+    </section>
+
+    <div class="dashboard-container">
+        <span class="header">
+            <h4 class="the_month">{{ financial_data.date|date:"F Y" }}</h4>
+            <span class="the_welcome">
+                <h3>Welcome, {{ kid_name }}</h3>
+                <h4>Your Monthly Budget: ${{ financial_data.monthly_budget }}</h4>
+            </span>
+        </span>
+        <span class="middle">
+            <span class="middle-left">
+                <p>Total Income: ${{ financial_data.total_income }}</p>
+                <p>Total Expense: ${{ financial_data.total_expense }}</p>
+                <p>Monthly Available: ${{ financial_data.monthly_debit }}</p>
+                <p>Credit: ${{ financial_data.credit }}</p>
+                <p>Used Credit: ${{ financial_data.total_used_credit }}</P>
+            </span>
+            <span class="middle-right">
+                <span class="incomes">
+                    {% if monthly_incomes %}
+                        <span class="income">
+                            {% for income in monthly_incomes %}
+                                <span class="income_li">
+                                    <span class="income_date">{{ income.date|date:"d D" }}</span> - <span class="income_title">{{ income.title }}:</span> <span class="income_amount">${{ income.amount }}</span>
+                                </span>
+                            {% endfor %}
+                        </span>
+                        <span class="monthly_incomes">${{ financial_data.sum_monthly_income }}</span>
+                    {% else %}
+                        <p class="income">No incomes recorded for this month.</p>
+                    {% endif %}
+                </span>
+                    <span class="expenses">
+                        {% if monthly_expenses %}
+                            <span class="expense">
+                                {% for expense in monthly_expenses %}
+                                    <span class="expense_li">
+                                        <span class="expense_date">{{ expense.date|date:"d D" }}</span> - <span class="expense_title">{{ expense.title }}:</span> <span class="expense_amount">${{ expense.amount }}</span>
+                                    </span>
+                                {% endfor %}
+                            </span>
+
+                        <span class="monthly_expenses">${{ financial_data.sum_monthly_expense }}</span>
+
+                    {% else %}
+                        <p class="expense">No expenses recorded for this month.</p>
+                    {% endif %}
+                </span>
+            </span>
+        </span>
+        <span class="footer">
+            <p> ${{ financial_data.goal }}</p>
+            <p> ${{ financial_data.debit }}</p>
+        </span>
+    </div>
+</body>
+</html>

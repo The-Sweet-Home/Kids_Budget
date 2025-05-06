@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Kids Budget Home</title>
+    <link href="{% static 'budget/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="login-form">
+        <form method="post">
+            {% csrf_token %}
+            <label for="kid">Kid:</label>
+            <select name="kid">
+                <option value="Shaina">Shaina</option>
+                <option value="Viana">Viana</option>
+            </select>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" name="password">
+            <br>
+            <input type="submit" value="Login">
+        </form>
+        <br>
+        <a href="/admin/"><button>Admin Panel</button></a>
+    </div>
+    
+    
+</body>
+</html>
