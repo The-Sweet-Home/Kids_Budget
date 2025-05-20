@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     "www.rahrow.ca",
     "rahrow.info",
     "www.rahrow.info",
+    "142.93.149.109",
     "127.0.0.1",
     "localhost"
 ]
