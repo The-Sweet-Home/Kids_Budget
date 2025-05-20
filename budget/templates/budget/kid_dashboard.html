@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,66 +8,113 @@
     <link rel="stylesheet" href="{% static 'budget/styles_dash.css' %}">
 </head>
 <body>
-    <section class="ponies">
-        <a href="{% url 'index' %}">
-            <img class="back" src="{% static 'budget/image/Shaina/Back.png' %}">
-        </a>
-        <img class="quin" src="{% static 'budget/image/Shaina/Quin.png' %}">
-    </section>
+    <img id="bg-measure" src="{% static 'budget/image/dashboard_bg.jpg' %}" alt="bg" style="height: 100vh; object-fit: contain; position: absolute; top: 0;">
 
-    <div class="dashboard-container">
-        <span class="header">
-            <h4 class="the_month">{{ financial_data.date|date:"F Y" }}</h4>
-            <span class="the_welcome">
-                <h3>Welcome, {{ kid_name }}</h3>
-                <h4>Your Monthly Budget: ${{ financial_data.monthly_budget }}</h4>
-            </span>
-        </span>
-        <span class="middle">
-            <span class="middle-left">
-                <p>Total Income: ${{ financial_data.total_income }}</p>
-                <p>Total Expense: ${{ financial_data.total_expense }}</p>
-                <p>Monthly Available: ${{ financial_data.monthly_debit }}</p>
-                <p>Credit: ${{ financial_data.credit }}</p>
-                <p>Used Credit: ${{ financial_data.total_used_credit }}</P>
-            </span>
-            <span class="middle-right">
-                <span class="incomes">
-                    {% if monthly_incomes %}
-                        <span class="income">
-                            {% for income in monthly_incomes %}
-                                <span class="income_li">
-                                    <span class="income_date">{{ income.date|date:"d D" }}</span> - <span class="income_title">{{ income.title }}:</span> <span class="income_amount">${{ income.amount }}</span>
-                                </span>
-                            {% endfor %}
-                        </span>
-                        <span class="monthly_incomes">${{ financial_data.sum_monthly_income }}</span>
-                    {% else %}
-                        <p class="income">No incomes recorded for this month.</p>
-                    {% endif %}
+    <div id="content-wrapper">
+        <div class="dashboard-container">
+            <img class="quin" src="{% static 'budget/image/Shaina/Quin.png' %}">
+
+            <span class="header">
+                <span class="left-header">
+                    <a href="{% url 'index' %}">
+                        <img class="back" src="{% static 'budget/image/Shaina/Back.png' %}">
+                    </a>
+                    <h4 class="the_month">{{ financial_data.date|date:"F Y" }}</h4>
                 </span>
+                <span class="right-header">
+                    <h3>Welcome, {{ kid_name }}</h3>
+                    <h4>Your Monthly Budget: ${{ financial_data.monthly_budget }}</h4>
+                </span>
+            </span>
+
+            <span class="middle">
+                <span class="middle-left">
+                    <p>Total Income: ${{ financial_data.total_income }}</p>
+                    <p>Total Expense: ${{ financial_data.total_expense }}</p>
+                    <p>Monthly Available: ${{ financial_data.monthly_debit }}</p>
+                    <p>Credit: ${{ financial_data.credit }}</p>
+                    <p>Used Credit: ${{ financial_data.total_used_credit }}</p>
+                </span>
+
+                <span class="middle-right">
+                    <span class="incomes">
+                        {% if monthly_incomes %}
+                            <span class="income">
+                                {% for income in monthly_incomes %}
+                                    <span class="income_li">
+                                        <span class="income_date">{{ income.date|date:"d D" }}</span> - 
+                                        <span class="income_title">{{ income.title }}</span> 
+                                        <span class="income_amount">${{ income.amount }}</span>
+                                    </span>
+                                {% endfor %}
+                            </span>
+                            <span class="monthly_incomes">${{ financial_data.sum_monthly_income }}</span>
+                        {% else %}
+                            <p class="income">No incomes recorded for this month.</p>
+                        {% endif %}
+                    </span>
+
                     <span class="expenses">
                         {% if monthly_expenses %}
                             <span class="expense">
                                 {% for expense in monthly_expenses %}
                                     <span class="expense_li">
-                                        <span class="expense_date">{{ expense.date|date:"d D" }}</span> - <span class="expense_title">{{ expense.title }}:</span> <span class="expense_amount">${{ expense.amount }}</span>
+                                        <span class="expense_date">{{ expense.date|date:"d D" }}</span> - 
+                                        <span class="expense_title">{{ expense.title }}</span> 
+                                        <span class="expense_amount">${{ expense.amount }}</span>
                                     </span>
                                 {% endfor %}
                             </span>
-
-                        <span class="monthly_expenses">${{ financial_data.sum_monthly_expense }}</span>
-
-                    {% else %}
-                        <p class="expense">No expenses recorded for this month.</p>
-                    {% endif %}
+                            <span class="monthly_expenses">${{ financial_data.sum_monthly_expense }}</span>
+                        {% else %}
+                            <p class="expense">No expenses recorded for this month.</p>
+                        {% endif %}
+                    </span>
                 </span>
             </span>
-        </span>
-        <span class="footer">
-            <p> ${{ financial_data.goal }}</p>
-            <p> ${{ financial_data.debit }}</p>
-        </span>
+
+            <span class="footer">
+                <p> ${{ financial_data.goal }}</p>
+                <p> ${{ financial_data.debit }}</p>
+            </span>
+        </div>
     </div>
 </body>
+
+<script>
+    function updateDynamicStyles() {
+        const bgImg = document.getElementById('bg-measure');
+        const root = document.documentElement;
+
+        const update = () => {
+            const bgHeight = bgImg.clientHeight;
+            const vw = window.innerWidth;
+
+            // Adjust width based on background height
+            const computedWidth = bgHeight * 0.77;
+            const contentWidthVW = (computedWidth / vw) * 100;
+            root.style.setProperty('--content-width', `${contentWidthVW}vw`);
+
+            // Adjust font sizes based on background height
+            const baseFontSize = bgHeight * 0.02; // Example: 2% of height
+
+            root.style.setProperty('--text-font-size', `${baseFontSize}px`);
+            root.style.setProperty('--small-font-size', `${baseFontSize * 0.9}px`);
+            root.style.setProperty('--subheader-font-size', `${baseFontSize * 1.2}px`);
+            root.style.setProperty('--header-font-size', `${baseFontSize * 1.5}px`);
+        };
+
+        if (bgImg.complete) {
+            update();
+        } else {
+            bgImg.onload = update;
+        }
+
+        window.addEventListener('resize', update);
+    }
+
+    updateDynamicStyles();
+</script>
+
+
 </html>

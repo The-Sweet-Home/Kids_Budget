@@ -1,168 +1,285 @@
-/* General body styling with background */
+/* CSS Variables for consistent theming */
+:root {
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+    --bg-image: url("/static/budget/image/dashboard_bg.jpg");
+    --bg-color: #fff;
+    --background-size: contain;
 
-body, html {
+  
+    --text-color: #333;
+    --header-font-size: 1.5rem;
+    --subheader-font-size: 1.2rem;
+    --text-font-size: 1rem;
+    --small-font-size: 0.95rem;
+  
+    --content-width: 50vw;
+    --content-height: 100vh;
+    --content-max-width: 1440px;
+    --content-max-height: 810px;
+  
+    --gap: 1rem;
+    --padding: 0vh 2vw 1vh 1vw;
+  
+    --transition-speed: 0.3s;
+  }
+  
+  /* Base Reset */
+  * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    /* width: 100%; */
-    font-family: Arial, sans-serif;
-    background: url("image/dashboard_bg.jpg") no-repeat center center fixed;
+  }
+  
+  /* Body Styling */
+  body {
+    background-color: var(--bg-color);
+    /* background: var(--bg-image) no-repeat center center; */
     background-size: contain;
-    height: 100%;
-    /* width: 100vw; */
-    font-size: 16px;
-    }
-    
-    img.quin {
-        position: fixed;
-        top: 0;
-        left: -7%;
-        width: 100%;
-        height: 90%;
-        object-fit: contain;
-    }
-    
-    img.back {
-        position: fixed;
-        top: 0;
-        left: 33%;
-        width: 5%;
-        height: 9%;
-        object-fit: contain;
-        z-index: 2;
-    }
-    
-    .Shaina_Quin {
-        position: absolute;
-        top: 0;
-        left: 25%;
-        width: 33%;
-    }
-    
-
-.dashboard-container {
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: var(--font-family);
+    overflow: auto;
+  }
+  
+  /* Wrapper that holds everything */
+  .dashboard-container {
+    width: var(--content-width);
+    height: var(--content-height);
+    /* max-width: var(--content-max-width);
+    max-height: var(--content-max-height); */
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 1;
-}
-
-.header {
+    position: relative;
+    overflow-y: auto;
+  }
+  
+  /* Header (buttons/date/welcome) */
+  .header {
+    height: 10%;
+    width: var(--content-width);
+    padding: 0 2vw;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: flex-start; 
-    /* justify-content: center; */
-    height: 11.2vh;
-    width: 35%;
-    gap: 18%;
-}
-
-.the_month {
-    padding-top: 4%;
-}
-.the_welcome {
-    margin-top: 0;
-    justify-items: center;
-}
-.the_welcome h3 {
-    margin-bottom: 2%;
-}
-.the_welcome h4 {
-    margin: 0%;
-}
-.middle {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    height: 83vh;
-    width: 36%;
-}
-
-.middle-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    font-size: 80%;
-    margin-top: 25%;
-    height: 15%;
-    width: 26%;
-}
-.middle-left p{
-    margin: 0%;
-    padding: 0%;
-}
-
-.middle-right {
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    width: 65%;
-    gap: 6%;
-}
-.incomes {
+    align-items: center;
+    margin-bottom: 1vh;
+  }
+  .left-header {
+    width: calc(0.4 * var(--content-width));
+  }
+  .back {
+    position: absolute;
+    height: 5vh;
+    top: 1%;
+    cursor: pointer;
+    transition: transform var(--transition-speed);
+  }
+  
+  .back:hover {
+    transform: scale(1.05);
+  }
+
+  .the_month {
+    position: absolute;
+    top: 5%;
+    font-size: var(--header-font-size);
+    font-weight: bold;
+    padding-left: 10%;
+  }
+  
+  .right-header {
+    position: relative;
+    top: 10%;
+    padding-bottom:5%;
+  }
+  .right-header h3 {
+    font-size: var(--subheader-font-size);
+    margin-bottom: 0.3rem;
+  }
+  
+  .right-header h4 {
+    font-size: var(--text-font-size);
+    font-weight: normal;
+  }
+  
+  img.quin {
+    position: absolute;
+    top: calc(0.01 * var(--content-width));
+    left: calc(0.01 * var(--content-width));
+    align-self: center;
+    width: calc(0.60 * var(--content-width));
+    object-fit: contain;
+    pointer-events: none; /* Prevent accidental clicks */
+  }
+  
+  /* Middle */
+  .middle {
+    height: 81%;
+    width: var(--content-width);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 0;
+    gap: 1vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+  
+  .middle-left {
+    padding-top: 25%;
+    flex: 1;
+    width: 30%;
+  }
+
+  .middle-left p {
+    font-size: var(--text-font-size);
+    margin-bottom: 0.5rem;
+  }
+
+  .middle-right {
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    height: 32%;
+    width: 70%;
     gap: 4%;
-}
-.income {
+  }
+  
+  /* Income & Expense Blocks */
+  .incomes {
+    height: 28%;
+    padding-top: 10%;
+  }
+  .income {
+    height: 75%;
     display: flex;
     flex-direction: column;
-    margin-right: 10%;
-    margin-top: 12%;
-    height: 65%;
-    gap: 10%;
-}
-.income_li {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-}
-.monthly_incomes {
-    height: 35%;
-    margin-right: 10%;
-    margin-left: auto;
-}
+    padding-top: 2%;
+    gap: 0.7rem;
+  }
+  .monthly_incomes {
+    height: 25%;
+    font-size: var(--subheader-font-size);
+    font-weight: bold;
+    padding-top: 0.2rem;
+    align-self: center;
+    padding-right: 2rem;
+    justify-self: right;
+    display: block;
+  }
+  .expenses {
+    height: 64%;
+    padding-top: 14%;
 
-.expenses {
+  }
+  .expense {
+    height: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    height: 62%;
-    gap: 2%;
-}
-.expense {
+    padding-top: 2%;
+    gap: 0.85rem;
+  }
+  
+  .income_li, .expense_li {
+    font-size: var(--small-font-size);
     display: flex;
-    flex-direction: column;
-    margin-right: 10%;
-    margin-top: 3%;
-    height: 80%;
-    gap: 4%;
-}
-.expense_li {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-}
-.monthly_expenses {
-    height: 20%;
-    margin-right: 10%;
-    margin-left: auto;
-}
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 0.3rem;
+  }
+  
+  .monthly_expenses {
+    height: 10%;
+    font-size: var(--subheader-font-size);
+    font-weight: bold;
+    padding-top: 0.4rem;
+    align-self: center;
+    padding-right: 2rem;
+    justify-self: right;
+    display: block;
+  }
 
-.footer {
+  p {
+    font-size: var(--subheader-font-size);
+  }
+  
+  /* Footer */
+  .footer {
+    height: 9%;
+    width: var(--content-width);
+    padding: 0 2vw;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: 5.8vh;
-    width: 41%;
-    gap: 6%;
-}
-.footer p {
-    margin: 1%;
-}
+    padding-top: 4vh;
+    font-weight: bold;
+    font-size: 1.1rem;
+    gap: 2vw;
+  }
+  
+  /* Responsive Media Queries */
+  
+  /* Tablets */
+  /* @media (max-width: 1024px) {
+    .content-wrapper {
+      width: 95vw;
+      height: 95vh;
+    }
+  
+    .middle {
+      flex-direction: column;
+    }
+  
+    .middle-left, .middle-right {
+      width: 100%;
+    }
+  
+    .back, .quin {
+      height: 5vh;
+    }
+  } */
+  
+  /* Mobile */
+  /* @media (max-width: 768px) {
+    .content-wrapper {
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      padding: 2vh 3vw;
+    }
+  
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  
+    .middle-left, .middle-right {
+      min-width: 100%;
+    }
+  
+    .footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  
+    .back, .quin {
+      height: 4vh;
+    }
+  
+    .the_month {
+      font-size: 1.2rem;
+    }
+  
+    .right-header h3 {
+      font-size: 1rem;
+    }
+  
+    .right-header h4 {
+      font-size: 0.9rem;
+    }
+  } */
+  
