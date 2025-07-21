@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date,timedelta
 from django.db.models import Sum
 from .models import Income, Expense, Goal, UsedCredit, GlobalBudgetSetting
 
@@ -50,7 +50,8 @@ def calculate_financials(kid_name):
     credit = max(GlobalBudgetSetting.objects.first().monthly_budget - total_monthly_used_credit - previous_total_monthly_used_credit, 0)
     overall_balance = total_income - total_expense
     overall_monthly_balance = sum_monthly_income - sum_monthly_expense
-    debit = monthly_budget + overall_monthly_balance
+    previous_balance = get_previous_months_balance(kid_name, current_year, current_month)
+    debit = monthly_budget + previous_balance + overall_monthly_balance  # This now accumulates unspent budget
 
     return {
         'date': today,
@@ -70,3 +71,24 @@ def calculate_financials(kid_name):
         'debit': debit,
     }
 
+
+def get_previous_months_balance(kid_name, current_year, current_month):
+    # Go back to beginning of recorded data
+    all_incomes = Income.objects.filter(kid=kid_name)
+    all_expenses = Expense.objects.filter(kid=kid_name)
+
+    if not all_incomes.exists() and not all_expenses.exists():
+        return 0
+
+    # Only consider records before current month
+    previous_incomes = all_incomes.exclude(
+        date__year=current_year,
+        date__month=current_month
+    ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+    previous_expenses = all_expenses.exclude(
+        date__year=current_year,
+        date__month=current_month
+    ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+    return previous_incomes - previous_expenses
